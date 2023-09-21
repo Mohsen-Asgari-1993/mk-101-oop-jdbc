@@ -4,6 +4,8 @@ import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 import ir.maktabsharif101.oopjdbc.base.repository.BaseEntityRepository;
 import ir.maktabsharif101.oopjdbc.base.service.BaseEntityService;
 
+import java.sql.SQLException;
+
 public class BaseEntityServiceImpl implements BaseEntityService {
 
     protected final BaseEntityRepository baseRepository;
@@ -28,7 +30,7 @@ public class BaseEntityServiceImpl implements BaseEntityService {
     }
 
     @Override
-    public long count() {
+    public long count() throws SQLException {
         return baseRepository.count();
     }
 

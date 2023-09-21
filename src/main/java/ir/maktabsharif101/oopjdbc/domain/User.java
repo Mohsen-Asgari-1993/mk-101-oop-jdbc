@@ -12,6 +12,8 @@ import java.time.ZonedDateTime;
 // @Inheritance(strategy = TABLE_PRE_CLASS)
 public class User extends BaseEntity {
 
+    public static final String TABLE_NAME = "user_tbl";
+
     private String firstName;
 
     private String lastName;

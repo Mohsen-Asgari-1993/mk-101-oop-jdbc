@@ -4,6 +4,9 @@ import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 import ir.maktabsharif101.oopjdbc.base.repository.BaseEntityRepository;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public abstract class BaseEntityRepositoryImpl
         implements BaseEntityRepository {
@@ -25,8 +28,13 @@ public abstract class BaseEntityRepositoryImpl
     }
 
     @Override
-    public long count() {
-        return 0;
+    public long count() throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "select count(*) from " + getEntityTableName()
+        );
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getLong(1);
     }
 
     @Override
@@ -49,5 +57,6 @@ public abstract class BaseEntityRepositoryImpl
         System.out.println("deleted by id : " + id);
     }
 
+    protected abstract String getEntityTableName();
 
 }

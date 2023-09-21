@@ -6,6 +6,8 @@ import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 //@Entity
 public class Permission extends BaseEntity {
 
+    public static final String TABLE_NAME = "permission_tbl";
+
     private String name;
 
     public String getName() {

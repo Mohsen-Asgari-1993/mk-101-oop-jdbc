@@ -16,6 +16,11 @@ public class PermissionRepositoryImpl
     }
 
     @Override
+    protected String getEntityTableName() {
+        return Permission.TABLE_NAME;
+    }
+
+    @Override
     public Permission findByName(String name) {
         return null;
     }

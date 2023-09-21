@@ -6,6 +6,8 @@ import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 //@Entity
 public class Role extends BaseEntity {
 
+    public static final String TABLE_NAME = "role_tbl";
+
     private String name;
 
     //    ManyToMany

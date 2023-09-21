@@ -2,6 +2,8 @@ package ir.maktabsharif101.oopjdbc.base.repository;
 
 import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 
+import java.sql.SQLException;
+
 @SuppressWarnings("unused")
 public interface BaseEntityRepository {
 
@@ -11,7 +13,7 @@ public interface BaseEntityRepository {
 
     void deleteById(Long id);
 
-    long count();
+    long count() throws SQLException;
 
     BaseEntity save(BaseEntity entity);
 

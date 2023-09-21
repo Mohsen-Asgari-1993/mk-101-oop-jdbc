@@ -2,6 +2,8 @@ package ir.maktabsharif101.oopjdbc.base.service;
 
 import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 
+import java.sql.SQLException;
+
 public interface BaseEntityService {
 
     BaseEntity[] findAll();
@@ -10,7 +12,7 @@ public interface BaseEntityService {
 
     void deleteById(Long id);
 
-    long count();
+    long count() throws SQLException;
 
     BaseEntity save(BaseEntity entity);
 
