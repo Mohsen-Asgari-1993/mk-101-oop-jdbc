@@ -16,45 +16,35 @@ import ir.maktabsharif101.oopjdbc.service.impl.UserServiceImpl;
 @SuppressWarnings("unused")
 public class ApplicationContext {
 
-    private static RoleRepository roleRepository;
+    private static final ApplicationContext applicationContext = new ApplicationContext();
 
-    private static RoleService roleService;
+    private PermissionRepository permissionRepository;
 
-    private static PermissionRepository permissionRepository;
+    private PermissionService permissionService;
 
-    private static PermissionService permissionService;
+    private RoleRepository roleRepository;
 
-    private static UserRepository userRepository;
+    private RoleService roleService;
 
-    private static UserService userService;
+    private UserRepository userRepository;
+
+    private UserService userService;
 
     private ApplicationContext() {
     }
 
-    public static RoleRepository getRoleRepository() {
-        if (roleRepository == null) {
-            roleRepository = new RoleRepositoryImpl();
-        }
-        return roleRepository;
+    public static ApplicationContext getInstance() {
+        return applicationContext;
     }
 
-    public static RoleService getRoleService() {
-        if (roleService == null) {
-            roleService = new RoleServiceImpl(
-                    getRoleRepository()
-            );
-        }
-        return roleService;
-    }
-
-    public static PermissionRepository getPermissionRepository() {
+    public PermissionRepository getPermissionRepository() {
         if (permissionRepository == null) {
             permissionRepository = new PermissionRepositoryImpl();
         }
         return permissionRepository;
     }
 
-    public static PermissionService getPermissionService() {
+    public PermissionService getPermissionService() {
         if (permissionService == null) {
             permissionService = new PermissionServiceImpl(
                     getPermissionRepository()
@@ -63,14 +53,30 @@ public class ApplicationContext {
         return permissionService;
     }
 
-    public static UserRepository getUserRepository() {
+    public RoleRepository getRoleRepository() {
+        if (roleRepository == null) {
+            roleRepository = new RoleRepositoryImpl();
+        }
+        return roleRepository;
+    }
+
+    public RoleService getRoleService() {
+        if (roleService == null) {
+            roleService = new RoleServiceImpl(
+                    getRoleRepository()
+            );
+        }
+        return roleService;
+    }
+
+    public UserRepository getUserRepository() {
         if (userRepository == null) {
             userRepository = new UserRepositoryImpl();
         }
         return userRepository;
     }
 
-    public static UserService getUserService() {
+    public UserService getUserService() {
         if (userService == null) {
             userService = new UserServiceImpl(
                     getUserRepository(),
