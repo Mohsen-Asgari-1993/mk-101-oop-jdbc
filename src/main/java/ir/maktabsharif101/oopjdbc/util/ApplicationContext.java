@@ -39,7 +39,9 @@ public class ApplicationContext {
 
     public PermissionRepository getPermissionRepository() {
         if (permissionRepository == null) {
-            permissionRepository = new PermissionRepositoryImpl();
+            permissionRepository = new PermissionRepositoryImpl(
+                    DataSource.getConnection()
+            );
         }
         return permissionRepository;
     }
@@ -55,7 +57,9 @@ public class ApplicationContext {
 
     public RoleRepository getRoleRepository() {
         if (roleRepository == null) {
-            roleRepository = new RoleRepositoryImpl();
+            roleRepository = new RoleRepositoryImpl(
+                    DataSource.getConnection()
+            );
         }
         return roleRepository;
     }
@@ -71,7 +75,9 @@ public class ApplicationContext {
 
     public UserRepository getUserRepository() {
         if (userRepository == null) {
-            userRepository = new UserRepositoryImpl();
+            userRepository = new UserRepositoryImpl(
+                    DataSource.getConnection()
+            );
         }
         return userRepository;
     }

@@ -3,8 +3,16 @@ package ir.maktabsharif101.oopjdbc.base.repository.impl;
 import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 import ir.maktabsharif101.oopjdbc.base.repository.BaseEntityRepository;
 
+import java.sql.Connection;
+
 public abstract class BaseEntityRepositoryImpl
         implements BaseEntityRepository {
+
+    protected final Connection connection;
+
+    protected BaseEntityRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public BaseEntity[] findAll() {
