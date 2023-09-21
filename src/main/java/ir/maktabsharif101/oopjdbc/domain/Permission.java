@@ -1,10 +1,10 @@
 package ir.maktabsharif101.oopjdbc.domain;
 
-import ir.maktabsharif101.oopjdbc.base.domain.Entity;
+import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 
 @SuppressWarnings("unused")
 //@Entity
-public class Permission extends Entity {
+public class Permission extends BaseEntity {
 
     private String name;
 

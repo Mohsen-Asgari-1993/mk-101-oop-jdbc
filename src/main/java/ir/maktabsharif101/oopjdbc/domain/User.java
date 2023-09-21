@@ -1,13 +1,16 @@
 package ir.maktabsharif101.oopjdbc.domain;
 
-import ir.maktabsharif101.oopjdbc.base.domain.Entity;
+import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 import ir.maktabsharif101.oopjdbc.domain.enumeration.UserType;
 
 import java.time.ZonedDateTime;
 
 @SuppressWarnings("unused")
 //@Entity
-public class User extends Entity {
+// @Inheritance(strategy = SINGLE_TABLE)
+// @Inheritance(strategy = JOIN)
+// @Inheritance(strategy = TABLE_PRE_CLASS)
+public class User extends BaseEntity {
 
     private String firstName;
 

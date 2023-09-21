@@ -1,14 +1,14 @@
 package ir.maktabsharif101.oopjdbc.base.domain;
 
 @SuppressWarnings("unused")
-public abstract class Entity {
+public abstract class BaseEntity {
 
     private Long id;
 
-    public Entity() {
+    public BaseEntity() {
     }
 
-    public Entity(Long id) {
+    public BaseEntity(Long id) {
         this.id = id;
     }
 

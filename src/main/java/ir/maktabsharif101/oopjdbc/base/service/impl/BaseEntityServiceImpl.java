@@ -1,6 +1,6 @@
 package ir.maktabsharif101.oopjdbc.base.service.impl;
 
-import ir.maktabsharif101.oopjdbc.base.domain.Entity;
+import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 import ir.maktabsharif101.oopjdbc.base.repository.BaseEntityRepository;
 import ir.maktabsharif101.oopjdbc.base.service.BaseEntityService;
 
@@ -13,12 +13,12 @@ public class BaseEntityServiceImpl implements BaseEntityService {
     }
 
     @Override
-    public Entity[] findAll() {
+    public BaseEntity[] findAll() {
         return baseRepository.findAll();
     }
 
     @Override
-    public Entity findById(Long id) {
+    public BaseEntity findById(Long id) {
         return baseRepository.findById(id);
     }
 
@@ -33,12 +33,12 @@ public class BaseEntityServiceImpl implements BaseEntityService {
     }
 
     @Override
-    public Entity save(Entity entity) {
+    public BaseEntity save(BaseEntity entity) {
         return baseRepository.save(entity);
     }
 
     @Override
-    public Entity update(Entity entity) {
+    public BaseEntity update(BaseEntity entity) {
         return baseRepository.update(entity);
     }
 

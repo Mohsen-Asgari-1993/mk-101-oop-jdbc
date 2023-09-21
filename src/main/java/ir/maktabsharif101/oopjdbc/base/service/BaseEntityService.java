@@ -1,20 +1,20 @@
 package ir.maktabsharif101.oopjdbc.base.service;
 
-import ir.maktabsharif101.oopjdbc.base.domain.Entity;
+import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 
 public interface BaseEntityService {
 
-    Entity[] findAll();
+    BaseEntity[] findAll();
 
-    Entity findById(Long id);
+    BaseEntity findById(Long id);
 
     void deleteById(Long id);
 
     long count();
 
-    Entity save(Entity entity);
+    BaseEntity save(BaseEntity entity);
 
-    Entity update(Entity entity);
+    BaseEntity update(BaseEntity entity);
 
     boolean existsById(Long id);
 }

@@ -1,6 +1,6 @@
 package ir.maktabsharif101.oopjdbc.service.impl;
 
-import ir.maktabsharif101.oopjdbc.base.domain.Entity;
+import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 import ir.maktabsharif101.oopjdbc.base.service.impl.BaseEntityServiceImpl;
 import ir.maktabsharif101.oopjdbc.domain.User;
 import ir.maktabsharif101.oopjdbc.repository.UserRepository;
@@ -20,7 +20,7 @@ public class UserServiceImpl
     }
 
     @Override
-    public Entity save(Entity entity) {
+    public BaseEntity save(BaseEntity entity) {
 //        TODO use role service
         return super.save(entity);
     }
