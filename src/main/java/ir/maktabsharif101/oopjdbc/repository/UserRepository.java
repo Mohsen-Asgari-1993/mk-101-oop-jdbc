@@ -9,5 +9,5 @@ public interface UserRepository extends BaseEntityRepository {
 
     boolean existsByUsername(String username);
 
-    boolean existsByMobileName(String mobileName);
+    boolean existsByMobileNumber(String mobileNumber);
 }

@@ -19,7 +19,7 @@ public class UserRepositoryImpl extends BaseEntityRepositoryImpl
     }
 
     @Override
-    public boolean existsByMobileName(String mobileName) {
+    public boolean existsByMobileNumber(String mobileNumber) {
         return false;
     }
 }
