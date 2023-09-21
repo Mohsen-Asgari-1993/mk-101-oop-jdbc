@@ -1,23 +1,15 @@
 package ir.maktabsharif101.oopjdbc.domain;
 
+import ir.maktabsharif101.oopjdbc.base.domain.Entity;
+
 @SuppressWarnings("unused")
 //@Entity
-public class Role {
-
-    private Long id;
+public class Role extends Entity {
 
     private String name;
 
     //    ManyToMany
     private Permission[] permissions;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

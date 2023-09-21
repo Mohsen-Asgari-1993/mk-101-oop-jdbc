@@ -1,14 +1,13 @@
 package ir.maktabsharif101.oopjdbc.domain;
 
+import ir.maktabsharif101.oopjdbc.base.domain.Entity;
 import ir.maktabsharif101.oopjdbc.domain.enumeration.UserType;
 
 import java.time.ZonedDateTime;
 
 @SuppressWarnings("unused")
 //@Entity
-public class User {
-
-    private Long id;
+public class User extends Entity {
 
     private String firstName;
 
@@ -31,14 +30,6 @@ public class User {
 
     //    ManyToMany
     private Role[] roles;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;

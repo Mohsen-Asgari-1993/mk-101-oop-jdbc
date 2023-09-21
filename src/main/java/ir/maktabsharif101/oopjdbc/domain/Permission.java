@@ -1,20 +1,12 @@
 package ir.maktabsharif101.oopjdbc.domain;
 
+import ir.maktabsharif101.oopjdbc.base.domain.Entity;
+
 @SuppressWarnings("unused")
 //@Entity
-public class Permission {
-
-    private Long id;
+public class Permission extends Entity {
 
     private String name;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
