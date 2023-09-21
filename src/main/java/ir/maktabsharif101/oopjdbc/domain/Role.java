@@ -8,6 +8,7 @@ public class Role {
 
     private String name;
 
+    //    ManyToMany
     private Permission[] permissions;
 
     public Long getId() {
