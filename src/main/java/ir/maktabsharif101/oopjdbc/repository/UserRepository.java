@@ -10,6 +10,4 @@ public interface UserRepository extends BaseEntityRepository {
     boolean existsByUsername(String username);
 
     boolean existsByMobileName(String mobileName);
-
-    User[] findAllByFirstNameAndLastName(String firstName, String LastName);
 }
