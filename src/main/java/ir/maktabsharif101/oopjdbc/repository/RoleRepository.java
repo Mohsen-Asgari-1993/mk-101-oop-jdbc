@@ -1,14 +1,7 @@
 package ir.maktabsharif101.oopjdbc.repository;
 
-import ir.maktabsharif101.oopjdbc.domain.Role;
+import ir.maktabsharif101.oopjdbc.base.repository.BaseEntityRepository;
 
-public interface RoleRepository {
+public interface RoleRepository extends BaseEntityRepository {
 
-    Role[] findAll();
-
-    Role findById(Long id);
-
-    Role save(Role role);
-
-    Role update(Role role);
 }

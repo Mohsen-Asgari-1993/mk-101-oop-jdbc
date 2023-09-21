@@ -1,14 +1,7 @@
 package ir.maktabsharif101.oopjdbc.repository;
 
-import ir.maktabsharif101.oopjdbc.domain.Permission;
+import ir.maktabsharif101.oopjdbc.base.repository.BaseEntityRepository;
 
-public interface PermissionRepository {
+public interface PermissionRepository extends BaseEntityRepository {
 
-    Permission[] findAll();
-
-    Permission findById(Long id);
-
-    Permission save(Permission role);
-
-    Permission update(Permission role);
 }

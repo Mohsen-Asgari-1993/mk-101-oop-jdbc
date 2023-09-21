@@ -13,6 +13,7 @@ public class User extends Entity {
 
     private String lastName;
 
+    //    unique
     private String username;
 
     private String password;

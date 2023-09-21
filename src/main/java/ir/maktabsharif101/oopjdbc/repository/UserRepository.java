@@ -1,18 +1,15 @@
 package ir.maktabsharif101.oopjdbc.repository;
 
+import ir.maktabsharif101.oopjdbc.base.repository.BaseEntityRepository;
 import ir.maktabsharif101.oopjdbc.domain.User;
 
-public interface UserRepository {
+public interface UserRepository extends BaseEntityRepository {
 
-    User[] findAll();
+    User findByUsername(String username);
 
-    User findById(Long id);
+    boolean existsByUsername(String username);
 
-    void deleteById(Long id);
+    boolean existsByMobileName(String mobileName);
 
-    User save(User user);
-
-    User update(User user);
-
-    long count();
+    User[] findAllByFirstNameAndLastName(String firstName, String LastName);
 }
