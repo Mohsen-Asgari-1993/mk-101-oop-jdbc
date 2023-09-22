@@ -15,7 +15,7 @@ public class BaseEntityServiceImpl implements BaseEntityService {
     }
 
     @Override
-    public BaseEntity[] findAll() {
+    public BaseEntity[] findAll() throws SQLException {
         return baseRepository.findAll();
     }
 

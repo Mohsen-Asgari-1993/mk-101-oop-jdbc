@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public interface BaseEntityService {
 
-    BaseEntity[] findAll();
+    BaseEntity[] findAll() throws SQLException;
 
     BaseEntity findById(Long id) throws SQLException;
 

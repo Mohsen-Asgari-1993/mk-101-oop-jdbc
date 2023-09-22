@@ -30,4 +30,9 @@ public class RoleRepositoryImpl extends BaseEntityRepositoryImpl
 //        TODO fill permissions
         return role;
     }
+
+    @Override
+    protected BaseEntity[] getBaseEntityArrayForFindAll() throws SQLException {
+        return new Role[(int) count()];
+    }
 }

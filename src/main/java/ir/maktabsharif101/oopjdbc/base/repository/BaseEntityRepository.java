@@ -7,7 +7,7 @@ import java.sql.SQLException;
 @SuppressWarnings("unused")
 public interface BaseEntityRepository {
 
-    BaseEntity[] findAll();
+    BaseEntity[] findAll() throws SQLException;
 
     BaseEntity findById(Long id) throws SQLException;
 

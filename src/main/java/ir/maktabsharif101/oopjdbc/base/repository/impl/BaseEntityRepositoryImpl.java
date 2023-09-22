@@ -14,14 +14,29 @@ public abstract class BaseEntityRepositoryImpl
     protected final Connection connection;
 
     public static final String FIND_BY_ID_QUERY_TEMPLATE = "select * from %s where id = ?";
+    public static final String FIND_ALL_QUERY_TEMPLATE = "select * from %s";
 
     protected BaseEntityRepositoryImpl(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public BaseEntity[] findAll() {
-        return new BaseEntity[0];
+    public BaseEntity[] findAll() throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                String.format(
+                        FIND_ALL_QUERY_TEMPLATE,
+                        getEntityTableName()
+                )
+        );
+        ResultSet resultSet = preparedStatement.executeQuery();
+        BaseEntity[] entities = getBaseEntityArrayForFindAll();
+//        BaseEntity[] entities = new BaseEntity[(int) count()];
+        int index = 0;
+        while (resultSet.next()) {
+            entities[index] = mapResultSetToEntity(resultSet);
+            index++;
+        }
+        return entities;
     }
 
     @Override
@@ -73,5 +88,7 @@ public abstract class BaseEntityRepositoryImpl
     protected abstract String getEntityTableName();
 
     protected abstract BaseEntity mapResultSetToEntity(ResultSet resultSet) throws SQLException;
+
+    protected abstract BaseEntity[] getBaseEntityArrayForFindAll() throws SQLException;
 
 }

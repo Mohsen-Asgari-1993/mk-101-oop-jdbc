@@ -36,6 +36,11 @@ public class PermissionRepositoryImpl
     }
 
     @Override
+    protected BaseEntity[] getBaseEntityArrayForFindAll() throws SQLException {
+        return new Permission[(int) count()];
+    }
+
+    @Override
     public Permission findByName(String name) {
         return null;
     }
