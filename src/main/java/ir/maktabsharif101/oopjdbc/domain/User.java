@@ -14,6 +14,11 @@ public class User extends BaseEntity {
 
     public static final String TABLE_NAME = "user_tbl";
 
+    public static final String FIRST_NAME = "first_name";
+    public static final String LAST_NAME = "last_name";
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
+
     private String firstName;
 
     private String lastName;

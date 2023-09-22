@@ -15,7 +15,7 @@ public interface BaseEntityRepository {
 
     long count() throws SQLException;
 
-    BaseEntity save(BaseEntity entity);
+    BaseEntity save(BaseEntity entity) throws SQLException;
 
     BaseEntity update(BaseEntity entity);
 

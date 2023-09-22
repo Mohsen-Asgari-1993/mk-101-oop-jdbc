@@ -35,7 +35,7 @@ public class BaseEntityServiceImpl implements BaseEntityService {
     }
 
     @Override
-    public BaseEntity save(BaseEntity entity) {
+    public BaseEntity save(BaseEntity entity) throws SQLException {
         return baseRepository.save(entity);
     }
 

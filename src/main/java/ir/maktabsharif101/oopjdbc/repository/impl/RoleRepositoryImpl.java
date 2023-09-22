@@ -35,4 +35,14 @@ public class RoleRepositoryImpl extends BaseEntityRepositoryImpl
     protected BaseEntity[] getBaseEntityArrayForFindAll() throws SQLException {
         return new Role[(int) count()];
     }
+
+    @Override
+    protected String getInsertColumnsForFirstApproach() {
+        return Role.NAME;
+    }
+
+    @Override
+    protected String getInsertValuesForFirstApproach(BaseEntity entity) {
+        return "'".concat(((Role) entity).getName()).concat("'");
+    }
 }

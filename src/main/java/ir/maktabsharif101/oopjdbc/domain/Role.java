@@ -7,6 +7,7 @@ import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 public class Role extends BaseEntity {
 
     public static final String TABLE_NAME = "role_tbl";
+    public static final String NAME = "name";
 
     private String name;
 

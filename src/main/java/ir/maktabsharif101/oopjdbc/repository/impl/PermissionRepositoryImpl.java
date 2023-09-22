@@ -41,6 +41,17 @@ public class PermissionRepositoryImpl
     }
 
     @Override
+    protected String getInsertColumnsForFirstApproach() {
+        return Permission.NAME;
+    }
+
+    @Override
+    protected String getInsertValuesForFirstApproach(BaseEntity entity) {
+//        return "'user-create'";
+        return "'".concat(((Permission) entity).getName()).concat("'");
+    }
+
+    @Override
     public Permission findByName(String name) {
         return null;
     }

@@ -8,9 +8,16 @@ public class Permission extends BaseEntity {
 
     public static final String TABLE_NAME = "permission_tbl";
 
+    public static final String NAME = "name";
+
+    //    @Column(NAME)
     private String name;
 
     public Permission() {
+    }
+
+    public Permission(String name) {
+        this.name = name;
     }
 
     public Permission(Long id, String name) {
