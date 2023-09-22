@@ -6,6 +6,7 @@ import ir.maktabsharif101.oopjdbc.domain.Role;
 import ir.maktabsharif101.oopjdbc.repository.RoleRepository;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -44,5 +45,22 @@ public class RoleRepositoryImpl extends BaseEntityRepositoryImpl
     @Override
     protected String getInsertValuesForFirstApproach(BaseEntity entity) {
         return "'".concat(((Role) entity).getName()).concat("'");
+    }
+
+    @Override
+    protected String[] getInsertColumnsForSecondApproach() {
+        return new String[]{
+                Role.NAME
+        };
+    }
+
+    @Override
+    protected void fillPreparedStatementParamsForSave(PreparedStatement preparedStatement,
+                                                      BaseEntity entity) throws SQLException {
+//        inset into role_tbl(name) values(?)
+        preparedStatement.setString(
+                1,
+                ((Role) entity).getName()
+        );
     }
 }

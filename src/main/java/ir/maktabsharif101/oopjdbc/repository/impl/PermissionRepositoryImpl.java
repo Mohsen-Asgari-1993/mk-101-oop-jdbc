@@ -6,6 +6,7 @@ import ir.maktabsharif101.oopjdbc.domain.Permission;
 import ir.maktabsharif101.oopjdbc.repository.PermissionRepository;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -49,6 +50,23 @@ public class PermissionRepositoryImpl
     protected String getInsertValuesForFirstApproach(BaseEntity entity) {
 //        return "'user-create'";
         return "'".concat(((Permission) entity).getName()).concat("'");
+    }
+
+    @Override
+    protected String[] getInsertColumnsForSecondApproach() {
+        return new String[]{
+                Permission.NAME
+        };
+    }
+
+    @Override
+    protected void fillPreparedStatementParamsForSave(PreparedStatement preparedStatement,
+                                                      BaseEntity entity) throws SQLException {
+//        inset into permission_tbl(name) values(?)
+        preparedStatement.setString(
+                1,
+                ((Permission) entity).getName()
+        );
     }
 
     @Override

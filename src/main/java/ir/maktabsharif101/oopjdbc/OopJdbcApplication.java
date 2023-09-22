@@ -10,20 +10,20 @@ public class OopJdbcApplication {
     public static void main(String[] args) throws SQLException {
 
         System.out.println(
-                ApplicationContext.getInstance().getUserRepository().count()
+                ApplicationContext.getInstance().getUserService().count()
         );
         User user = new User();
-        user.setFirstName("mohsen");
-        user.setLastName("asgari");
-        user.setUsername("mat");
+        user.setFirstName("taghi");
+        user.setLastName("taghi pour");
+        user.setUsername("taghi");
         user.setPassword("123456789");
         System.out.println(
-                ApplicationContext.getInstance().getUserRepository().save(
+                ApplicationContext.getInstance().getUserService().save(
                         user
                 )
         );
         System.out.println(
-                ApplicationContext.getInstance().getUserRepository().count()
+                ApplicationContext.getInstance().getUserService().count()
         );
 
     }

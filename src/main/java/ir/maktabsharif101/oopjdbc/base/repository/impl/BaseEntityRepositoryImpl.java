@@ -65,8 +65,8 @@ public abstract class BaseEntityRepositoryImpl
 
     @Override
     public BaseEntity save(BaseEntity entity) throws SQLException {
-        return saveFirstApproach(entity);
-//        return saveSecondApproach(entity);
+//        return saveFirstApproach(entity);
+        return saveSecondApproach(entity);
     }
 
     @Override
@@ -114,8 +114,22 @@ public abstract class BaseEntityRepositoryImpl
                 ),
                 Statement.RETURN_GENERATED_KEYS
         );
-        preparedStatement.executeUpdate();
 
+        return setGenerateKeyAndReturnEntity(entity, preparedStatement);
+    }
+
+    protected BaseEntity saveSecondApproach(BaseEntity entity) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                generateSaveSecondApproachQuery(),
+                Statement.RETURN_GENERATED_KEYS
+        );
+        fillPreparedStatementParamsForSave(preparedStatement, entity);
+
+        return setGenerateKeyAndReturnEntity(entity, preparedStatement);
+    }
+
+    protected BaseEntity setGenerateKeyAndReturnEntity(BaseEntity entity, PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.executeUpdate();
         ResultSet generatedKeysResultSet = preparedStatement.getGeneratedKeys();
         generatedKeysResultSet.next();
         entity.setId(
@@ -124,9 +138,34 @@ public abstract class BaseEntityRepositoryImpl
         return entity;
     }
 
-    protected BaseEntity saveSecondApproach(BaseEntity entity) {
-        return null;
+    protected String generateSaveSecondApproachQuery() {
+        String[] insertColumns = getInsertColumnsForSecondApproach();
+
+        return String.format(
+                INSERT_QUERY_TEMPLATE,
+                getEntityTableName(),
+                String.join(",", insertColumns),
+                generateQuestionMarkForInsertQuery(insertColumns.length)
+        );
+//        insert into user_tbl(first_name, last_name) values(?, ?)
     }
+
+    private String generateQuestionMarkForInsertQuery(int length) {
+        String questionMarks = "";
+        for (int i = 0; i < length; i++) {
+            if (i == length - 1) {
+                questionMarks = questionMarks.concat("?");
+            } else {
+                questionMarks = questionMarks.concat("?, ");
+            }
+//            questionMarks = questionMarks.concat("?,");
+        }
+        return questionMarks;
+//        ?,?,?,?,
+//        return questionMarks.substring(0, questionMarks.length() - 1);
+    }
+
+    protected abstract String[] getInsertColumnsForSecondApproach();
 
     protected abstract String getEntityTableName();
 
@@ -137,4 +176,8 @@ public abstract class BaseEntityRepositoryImpl
     protected abstract String getInsertColumnsForFirstApproach();
 
     protected abstract String getInsertValuesForFirstApproach(BaseEntity entity);
+
+    protected abstract void fillPreparedStatementParamsForSave(PreparedStatement preparedStatement,
+                                                               BaseEntity entity) throws SQLException;
+
 }

@@ -6,6 +6,7 @@ import ir.maktabsharif101.oopjdbc.domain.User;
 import ir.maktabsharif101.oopjdbc.repository.UserRepository;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -63,6 +64,39 @@ public class UserRepositoryImpl extends BaseEntityRepositoryImpl
                 concat("'").concat(user.getLastName()).concat("', ").
                 concat("'").concat(user.getUsername()).concat("', ").
                 concat("'").concat(user.getPassword()).concat("'");
+    }
+
+    @Override
+    protected String[] getInsertColumnsForSecondApproach() {
+        return new String[]{
+                User.FIRST_NAME,
+                User.LAST_NAME,
+                User.USERNAME,
+                User.PASSWORD
+        };
+    }
+
+    @Override
+    protected void fillPreparedStatementParamsForSave(PreparedStatement preparedStatement,
+                                                      BaseEntity entity) throws SQLException {
+//        inset into user_tbl(first_name, last_name, username, password) values(?, ?, ?, ?)
+        User user = (User) entity;
+        preparedStatement.setString(
+                1,
+                user.getFirstName()
+        );
+        preparedStatement.setString(
+                2,
+                user.getLastName()
+        );
+        preparedStatement.setString(
+                3,
+                user.getUsername()
+        );
+        preparedStatement.setString(
+                4,
+                user.getPassword()
+        );
     }
 
     @Override
