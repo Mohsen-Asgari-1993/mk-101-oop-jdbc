@@ -1,14 +1,18 @@
 package ir.maktabsharif101.oopjdbc.util;
 
+import ir.maktabsharif101.oopjdbc.repository.CityRepository;
 import ir.maktabsharif101.oopjdbc.repository.PermissionRepository;
 import ir.maktabsharif101.oopjdbc.repository.RoleRepository;
 import ir.maktabsharif101.oopjdbc.repository.UserRepository;
+import ir.maktabsharif101.oopjdbc.repository.impl.CityRepositoryImpl;
 import ir.maktabsharif101.oopjdbc.repository.impl.PermissionRepositoryImpl;
 import ir.maktabsharif101.oopjdbc.repository.impl.RoleRepositoryImpl;
 import ir.maktabsharif101.oopjdbc.repository.impl.UserRepositoryImpl;
+import ir.maktabsharif101.oopjdbc.service.CityService;
 import ir.maktabsharif101.oopjdbc.service.PermissionService;
 import ir.maktabsharif101.oopjdbc.service.RoleService;
 import ir.maktabsharif101.oopjdbc.service.UserService;
+import ir.maktabsharif101.oopjdbc.service.impl.CityServiceImpl;
 import ir.maktabsharif101.oopjdbc.service.impl.PermissionServiceImpl;
 import ir.maktabsharif101.oopjdbc.service.impl.RoleServiceImpl;
 import ir.maktabsharif101.oopjdbc.service.impl.UserServiceImpl;
@@ -29,6 +33,10 @@ public class ApplicationContext {
     private UserRepository userRepository;
 
     private UserService userService;
+
+    private CityRepository cityRepository;
+
+    private CityService cityService;
 
     private ApplicationContext() {
     }
@@ -90,5 +98,23 @@ public class ApplicationContext {
             );
         }
         return userService;
+    }
+
+    public CityRepository getCityRepository() {
+        if (cityRepository == null) {
+            cityRepository = new CityRepositoryImpl(
+                    DataSource.getConnection()
+            );
+        }
+        return cityRepository;
+    }
+
+    public CityService getCityService() {
+        if (cityService == null) {
+            cityService = new CityServiceImpl(
+                    getCityRepository()
+            );
+        }
+        return cityService;
     }
 }
