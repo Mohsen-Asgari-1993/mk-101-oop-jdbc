@@ -1,3 +1,6 @@
+CREATE SCHEMA IF NOT EXISTS mk_101_jdbc
+AUTHORIZATION postgres;
+
 CREATE TABLE IF NOT EXISTS mk_101_jdbc.permission_tbl
 (
 id bigint NOT NULL,
