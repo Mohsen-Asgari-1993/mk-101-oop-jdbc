@@ -1,10 +1,13 @@
 package ir.maktabsharif101.oopjdbc.repository.impl;
 
+import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 import ir.maktabsharif101.oopjdbc.base.repository.impl.BaseEntityRepositoryImpl;
 import ir.maktabsharif101.oopjdbc.domain.Permission;
 import ir.maktabsharif101.oopjdbc.repository.PermissionRepository;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @SuppressWarnings("unused")
 public class PermissionRepositoryImpl
@@ -18,6 +21,18 @@ public class PermissionRepositoryImpl
     @Override
     protected String getEntityTableName() {
         return Permission.TABLE_NAME;
+    }
+
+    @Override
+    protected BaseEntity mapResultSetToEntity(ResultSet resultSet) throws SQLException {
+        /*Permission permission = new Permission();
+        permission.setId(resultSet.getLong(1));
+        permission.setName(resultSet.getString(2));
+        return permission;*/
+        return new Permission(
+                resultSet.getLong(1),
+                resultSet.getString(2)
+        );
     }
 
     @Override

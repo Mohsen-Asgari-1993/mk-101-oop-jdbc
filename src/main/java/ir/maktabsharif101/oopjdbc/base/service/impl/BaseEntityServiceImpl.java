@@ -20,7 +20,7 @@ public class BaseEntityServiceImpl implements BaseEntityService {
     }
 
     @Override
-    public BaseEntity findById(Long id) {
+    public BaseEntity findById(Long id) throws SQLException {
         return baseRepository.findById(id);
     }
 

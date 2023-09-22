@@ -13,6 +13,8 @@ public abstract class BaseEntityRepositoryImpl
 
     protected final Connection connection;
 
+    public static final String FIND_BY_ID_QUERY_TEMPLATE = "select * from %s where id = ?";
+
     protected BaseEntityRepositoryImpl(Connection connection) {
         this.connection = connection;
     }
@@ -23,7 +25,18 @@ public abstract class BaseEntityRepositoryImpl
     }
 
     @Override
-    public BaseEntity findById(Long id) {
+    public BaseEntity findById(Long id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                String.format(
+                        FIND_BY_ID_QUERY_TEMPLATE,
+                        getEntityTableName()
+                )
+        );
+        preparedStatement.setLong(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            return mapResultSetToEntity(resultSet);
+        }
         return null;
     }
 
@@ -58,5 +71,7 @@ public abstract class BaseEntityRepositoryImpl
     }
 
     protected abstract String getEntityTableName();
+
+    protected abstract BaseEntity mapResultSetToEntity(ResultSet resultSet) throws SQLException;
 
 }

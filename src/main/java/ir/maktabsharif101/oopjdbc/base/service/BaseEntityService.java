@@ -8,7 +8,7 @@ public interface BaseEntityService {
 
     BaseEntity[] findAll();
 
-    BaseEntity findById(Long id);
+    BaseEntity findById(Long id) throws SQLException;
 
     void deleteById(Long id);
 
