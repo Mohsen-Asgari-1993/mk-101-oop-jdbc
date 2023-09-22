@@ -3,47 +3,47 @@ AUTHORIZATION postgres;
 
 CREATE TABLE IF NOT EXISTS mk_101_jdbc.permission_tbl
 (
-id bigint NOT NULL,
-name character varying(255) COLLATE pg_catalog."default" NOT NULL,
-CONSTRAINT permission_tbl_pkey PRIMARY KEY (id)
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT permission_tbl_pkey PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS mk_101_jdbc.permission_tbl
-OWNER to postgres;
+    OWNER to postgres;
 
 CREATE TABLE IF NOT EXISTS mk_101_jdbc.role_tbl
 (
-id bigint NOT NULL,
-name character varying(255) COLLATE pg_catalog."default" NOT NULL,
-CONSTRAINT role_tbl_pkey PRIMARY KEY (id)
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT role_tbl_pkey PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS mk_101_jdbc.role_tbl
-OWNER to postgres;
+    OWNER to postgres;
 
 CREATE TABLE IF NOT EXISTS mk_101_jdbc.user_tbl
 (
-id bigint NOT NULL,
-first_name character varying(255) COLLATE pg_catalog."default",
-last_name character varying(255) COLLATE pg_catalog."default",
-username character varying(255) COLLATE pg_catalog."default",
-password character varying(255) COLLATE pg_catalog."default",
-dtype character varying(255) COLLATE pg_catalog."default",
-email character varying(255) COLLATE pg_catalog."default",
-national_code character varying(255) COLLATE pg_catalog."default",
-address character varying(255) COLLATE pg_catalog."default",
-is_super_admin boolean,
-CONSTRAINT user_tbl_pkey PRIMARY KEY (id)
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    first_name character varying(255) COLLATE pg_catalog."default",
+    last_name character varying(255) COLLATE pg_catalog."default",
+    username character varying(255) COLLATE pg_catalog."default",
+    password character varying(255) COLLATE pg_catalog."default",
+    dtype character varying(255) COLLATE pg_catalog."default",
+    email character varying(255) COLLATE pg_catalog."default",
+    national_code character varying(255) COLLATE pg_catalog."default",
+    address character varying(255) COLLATE pg_catalog."default",
+    is_super_admin boolean,
+    CONSTRAINT user_tbl_pkey PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS mk_101_jdbc.user_tbl
-OWNER to postgres;
+    OWNER to postgres;
 
 CREATE TABLE IF NOT EXISTS mk_101_jdbc.roles_permissions
 (
