@@ -14,6 +14,7 @@ public abstract class BaseEntityRepositoryImpl
     public static final String FIND_ALL_QUERY_TEMPLATE = "select * from %s";
     public static final String INSERT_QUERY_TEMPLATE = "insert into %s(%s) values(%s)";
     public static final String UPDATE_QUERY_TEMPLATE = "update %s set %s where id = ?";
+    public static final String DELETE_BY_ID_QUERY_TEMPLATE = "delete from %s where id = ?";
 
     protected BaseEntityRepositoryImpl(Connection connection) {
         this.connection = connection;
@@ -87,8 +88,15 @@ public abstract class BaseEntityRepositoryImpl
     }
 
     @Override
-    public void deleteById(Long id) {
-        System.out.println("deleted by id : " + id);
+    public void deleteById(Long id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                String.format(
+                        DELETE_BY_ID_QUERY_TEMPLATE,
+                        getEntityTableName()
+                )
+        );
+        preparedStatement.setLong(1, id);
+        preparedStatement.executeUpdate();
     }
 
     protected boolean existsByIdWithCount(Long id) throws SQLException {

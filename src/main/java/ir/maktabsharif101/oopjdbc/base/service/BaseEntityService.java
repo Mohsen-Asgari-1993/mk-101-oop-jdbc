@@ -10,7 +10,7 @@ public interface BaseEntityService {
 
     BaseEntity findById(Long id) throws SQLException;
 
-    void deleteById(Long id);
+    void deleteById(Long id) throws SQLException;
 
     long count() throws SQLException;
 

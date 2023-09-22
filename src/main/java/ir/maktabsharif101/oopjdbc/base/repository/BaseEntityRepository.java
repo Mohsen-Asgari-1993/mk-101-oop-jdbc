@@ -11,7 +11,7 @@ public interface BaseEntityRepository {
 
     BaseEntity findById(Long id) throws SQLException;
 
-    void deleteById(Long id);
+    void deleteById(Long id) throws SQLException;
 
     long count() throws SQLException;
 

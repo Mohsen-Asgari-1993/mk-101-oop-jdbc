@@ -25,7 +25,7 @@ public class BaseEntityServiceImpl implements BaseEntityService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws SQLException {
         baseRepository.deleteById(id);
     }
 
