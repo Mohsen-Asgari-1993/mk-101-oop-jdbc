@@ -16,7 +16,7 @@ public interface BaseEntityService {
 
     BaseEntity save(BaseEntity entity) throws SQLException;
 
-    BaseEntity update(BaseEntity entity);
+    BaseEntity update(BaseEntity entity) throws SQLException;
 
     boolean existsById(Long id) throws SQLException;
 }

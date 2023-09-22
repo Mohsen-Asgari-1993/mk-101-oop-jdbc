@@ -40,7 +40,7 @@ public class BaseEntityServiceImpl implements BaseEntityService {
     }
 
     @Override
-    public BaseEntity update(BaseEntity entity) {
+    public BaseEntity update(BaseEntity entity) throws SQLException {
         return baseRepository.update(entity);
     }
 

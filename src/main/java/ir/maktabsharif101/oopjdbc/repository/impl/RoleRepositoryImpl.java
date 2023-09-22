@@ -63,4 +63,17 @@ public class RoleRepositoryImpl extends BaseEntityRepositoryImpl
                 ((Role) entity).getName()
         );
     }
+
+    @Override
+    protected void fillPreparedStatementParamsForUpdate(PreparedStatement preparedStatement,
+                                                        BaseEntity entity) throws SQLException {
+        preparedStatement.setString(
+                1,
+                ((Role) entity).getName()
+        );
+        preparedStatement.setLong(
+                2,
+                entity.getId()
+        );
+    }
 }

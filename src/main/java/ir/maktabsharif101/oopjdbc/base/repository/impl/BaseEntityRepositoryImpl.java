@@ -13,6 +13,7 @@ public abstract class BaseEntityRepositoryImpl
     public static final String FIND_BY_ID_QUERY_TEMPLATE = "select * from %s where id = ?";
     public static final String FIND_ALL_QUERY_TEMPLATE = "select * from %s";
     public static final String INSERT_QUERY_TEMPLATE = "insert into %s(%s) values(%s)";
+    public static final String UPDATE_QUERY_TEMPLATE = "update %s set %s where id = ?";
 
     protected BaseEntityRepositoryImpl(Connection connection) {
         this.connection = connection;
@@ -70,8 +71,13 @@ public abstract class BaseEntityRepositoryImpl
     }
 
     @Override
-    public BaseEntity update(BaseEntity entity) {
-        return null;
+    public BaseEntity update(BaseEntity entity) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                generateUpdateQuery()
+        );
+        fillPreparedStatementParamsForUpdate(preparedStatement, entity);
+        preparedStatement.executeUpdate();
+        return entity;
     }
 
     @Override
@@ -165,6 +171,23 @@ public abstract class BaseEntityRepositoryImpl
 //        return questionMarks.substring(0, questionMarks.length() - 1);
     }
 
+    protected String generateUpdateQuery() {
+        String[] updateColumns = getInsertColumnsForSecondApproach();
+
+        String setClause = "";
+        for (String updateColumn : updateColumns) {
+            setClause = setClause.concat(updateColumn).concat(" = ?,");
+        }
+//        first_name = ?, last_name = ?,
+        setClause = setClause.substring(0, setClause.length() - 1);
+//        first_name = ?, last_name = ?
+        return String.format(
+                UPDATE_QUERY_TEMPLATE,
+                getEntityTableName(),
+                setClause
+        );
+    }
+
     protected abstract String[] getInsertColumnsForSecondApproach();
 
     protected abstract String getEntityTableName();
@@ -179,5 +202,8 @@ public abstract class BaseEntityRepositoryImpl
 
     protected abstract void fillPreparedStatementParamsForSave(PreparedStatement preparedStatement,
                                                                BaseEntity entity) throws SQLException;
+
+    protected abstract void fillPreparedStatementParamsForUpdate(PreparedStatement preparedStatement,
+                                                                 BaseEntity entity) throws SQLException;
 
 }

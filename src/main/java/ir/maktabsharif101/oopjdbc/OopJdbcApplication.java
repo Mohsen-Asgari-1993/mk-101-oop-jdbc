@@ -9,21 +9,21 @@ public class OopJdbcApplication {
 
     public static void main(String[] args) throws SQLException {
 
+        User beforeUpdate = (User) ApplicationContext.getInstance().getUserService().findById(3L);
         System.out.println(
-                ApplicationContext.getInstance().getUserService().count()
+                "before update: " + beforeUpdate
         );
-        User user = new User();
-        user.setFirstName("taghi");
-        user.setLastName("taghi pour");
-        user.setUsername("taghi");
-        user.setPassword("123456789");
-        System.out.println(
-                ApplicationContext.getInstance().getUserService().save(
-                        user
-                )
+        beforeUpdate.setFirstName(
+                beforeUpdate.getFirstName() + beforeUpdate.getFirstName().length()
         );
+        beforeUpdate.setPassword(
+                "9876543210"
+        );
+        ApplicationContext.getInstance().getUserService().update(beforeUpdate);
+
+        User afterUpdate = (User) ApplicationContext.getInstance().getUserService().findById(3L);
         System.out.println(
-                ApplicationContext.getInstance().getUserService().count()
+                "after update: " + afterUpdate
         );
 
     }

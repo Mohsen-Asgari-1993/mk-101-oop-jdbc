@@ -100,6 +100,32 @@ public class UserRepositoryImpl extends BaseEntityRepositoryImpl
     }
 
     @Override
+    protected void fillPreparedStatementParamsForUpdate(PreparedStatement preparedStatement,
+                                                        BaseEntity entity) throws SQLException {
+        User user = (User) entity;
+        preparedStatement.setString(
+                1,
+                user.getFirstName()
+        );
+        preparedStatement.setString(
+                2,
+                user.getLastName()
+        );
+        preparedStatement.setString(
+                3,
+                user.getUsername()
+        );
+        preparedStatement.setString(
+                4,
+                user.getPassword()
+        );
+        preparedStatement.setLong(
+                5,
+                user.getId()
+        );
+    }
+
+    @Override
     public User findByUsername(String username) {
         return null;
     }
