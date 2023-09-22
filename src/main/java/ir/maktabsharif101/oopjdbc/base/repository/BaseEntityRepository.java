@@ -19,6 +19,6 @@ public interface BaseEntityRepository {
 
     BaseEntity update(BaseEntity entity);
 
-    boolean existsById(Long id);
+    boolean existsById(Long id) throws SQLException;
 
 }

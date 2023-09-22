@@ -76,13 +76,33 @@ public abstract class BaseEntityRepositoryImpl
     }
 
     @Override
-    public boolean existsById(Long id) {
-        return false;
+    public boolean existsById(Long id) throws SQLException {
+//        return existsByIdWithCount(id);
+        return existsByIdWithIdSelection(id);
     }
 
     @Override
     public void deleteById(Long id) {
         System.out.println("deleted by id : " + id);
+    }
+
+    protected boolean existsByIdWithCount(Long id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "select count(*) from " + getEntityTableName() + " where id = ?"
+        );
+        preparedStatement.setLong(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getLong(1) > 0;
+    }
+
+    protected boolean existsByIdWithIdSelection(Long id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "select id from " + getEntityTableName() + " where id = ?"
+        );
+        preparedStatement.setLong(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet.next();
     }
 
     protected abstract String getEntityTableName();

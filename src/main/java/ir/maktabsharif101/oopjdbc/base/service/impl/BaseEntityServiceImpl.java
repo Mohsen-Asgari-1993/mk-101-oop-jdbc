@@ -45,7 +45,7 @@ public class BaseEntityServiceImpl implements BaseEntityService {
     }
 
     @Override
-    public boolean existsById(Long id) {
+    public boolean existsById(Long id) throws SQLException {
         return baseRepository.existsById(id);
     }
 }
