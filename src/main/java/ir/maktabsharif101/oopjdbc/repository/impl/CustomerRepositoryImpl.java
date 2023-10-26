@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class CustomerRepositoryImpl extends BaseUserRepositoryImpl<Customer>
         implements CustomerRepository {
 
-    protected CustomerRepositoryImpl(Connection connection) {
+    public CustomerRepositoryImpl(Connection connection) {
         super(connection);
     }
 
