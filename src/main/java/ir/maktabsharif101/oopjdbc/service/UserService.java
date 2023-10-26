@@ -3,7 +3,7 @@ package ir.maktabsharif101.oopjdbc.service;
 import ir.maktabsharif101.oopjdbc.base.service.BaseEntityService;
 import ir.maktabsharif101.oopjdbc.domain.User;
 
-public interface UserService extends BaseEntityService {
+public interface UserService extends BaseEntityService<User, Long> {
 
     User findByUsername(String username);
 

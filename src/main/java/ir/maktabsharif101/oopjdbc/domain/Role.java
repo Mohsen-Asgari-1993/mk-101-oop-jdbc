@@ -2,9 +2,11 @@ package ir.maktabsharif101.oopjdbc.domain;
 
 import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 
+import java.util.List;
+
 @SuppressWarnings("unused")
 //@Entity
-public class Role extends BaseEntity {
+public class Role extends BaseEntity<Long> {
 
     public static final String TABLE_NAME = "role_tbl";
     public static final String NAME = "name";
@@ -12,7 +14,7 @@ public class Role extends BaseEntity {
     private String name;
 
     //    ManyToMany
-    private Permission[] permissions;
+    private List<Permission> permissions;
 
     public String getName() {
         return name;
@@ -22,11 +24,11 @@ public class Role extends BaseEntity {
         this.name = name;
     }
 
-    public Permission[] getPermissions() {
+    public List<Permission> getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(Permission[] permissions) {
+    public void setPermissions(List<Permission> permissions) {
         this.permissions = permissions;
     }
 

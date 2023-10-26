@@ -3,7 +3,7 @@ package ir.maktabsharif101.oopjdbc.domain;
 import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 
 @SuppressWarnings("unused")
-public class City extends BaseEntity {
+public class City extends BaseEntity<Long> {
 
     public static final String TABLE_NAME = "city_tbl";
 

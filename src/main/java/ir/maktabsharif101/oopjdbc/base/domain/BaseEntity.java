@@ -1,22 +1,24 @@
 package ir.maktabsharif101.oopjdbc.base.domain;
 
-@SuppressWarnings("unused")
-public abstract class BaseEntity {
+import java.io.Serializable;
 
-    private Long id;
+@SuppressWarnings("unused")
+public abstract class BaseEntity<ID extends Serializable> {
+
+    private ID id;
 
     public BaseEntity() {
     }
 
-    public BaseEntity(Long id) {
+    public BaseEntity(ID id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public ID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(ID id) {
         this.id = id;
     }
 }

@@ -1,6 +1,5 @@
 package ir.maktabsharif101.oopjdbc.service.impl;
 
-import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 import ir.maktabsharif101.oopjdbc.base.service.impl.BaseEntityServiceImpl;
 import ir.maktabsharif101.oopjdbc.domain.User;
 import ir.maktabsharif101.oopjdbc.repository.UserRepository;
@@ -11,7 +10,7 @@ import java.sql.SQLException;
 
 @SuppressWarnings("unused")
 public class UserServiceImpl
-        extends BaseEntityServiceImpl
+        extends BaseEntityServiceImpl<User, Long, UserRepository>
         implements UserService {
 
     private final RoleService roleService;
@@ -22,23 +21,23 @@ public class UserServiceImpl
     }
 
     @Override
-    public BaseEntity save(BaseEntity entity) throws SQLException {
+    public User save(User entity) throws SQLException {
 //        TODO use role service
         return super.save(entity);
     }
 
     @Override
     public User findByUsername(String username) {
-        return ((UserRepository) baseRepository).findByUsername(username);
+        return baseRepository.findByUsername(username);
     }
 
     @Override
     public boolean existsByUsername(String username) {
-        return ((UserRepository) baseRepository).existsByUsername(username);
+        return baseRepository.existsByUsername(username);
     }
 
     @Override
     public boolean existsByMobileNumber(String mobileNumber) {
-        return ((UserRepository) baseRepository).existsByMobileNumber(mobileNumber);
+        return baseRepository.existsByMobileNumber(mobileNumber);
     }
 }

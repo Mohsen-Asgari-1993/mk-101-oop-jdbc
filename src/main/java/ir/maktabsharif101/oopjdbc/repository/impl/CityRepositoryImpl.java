@@ -1,6 +1,5 @@
 package ir.maktabsharif101.oopjdbc.repository.impl;
 
-import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 import ir.maktabsharif101.oopjdbc.base.repository.impl.BaseEntityRepositoryImpl;
 import ir.maktabsharif101.oopjdbc.domain.City;
 import ir.maktabsharif101.oopjdbc.repository.CityRepository;
@@ -10,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CityRepositoryImpl extends BaseEntityRepositoryImpl
+public class CityRepositoryImpl extends BaseEntityRepositoryImpl<City, Long>
         implements CityRepository {
 
     public CityRepositoryImpl(Connection connection) {
@@ -50,16 +49,11 @@ public class CityRepositoryImpl extends BaseEntityRepositoryImpl
     }
 
     @Override
-    protected BaseEntity mapResultSetToEntity(ResultSet resultSet) throws SQLException {
+    protected City mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return new City(
                 resultSet.getLong(1),
                 resultSet.getString(2)
         );
-    }
-
-    @Override
-    protected BaseEntity[] getBaseEntityArrayForFindAll() throws SQLException {
-        return new City[(int) count()];
     }
 
     @Override
@@ -68,27 +62,43 @@ public class CityRepositoryImpl extends BaseEntityRepositoryImpl
     }
 
     @Override
-    protected String getInsertValuesForFirstApproach(BaseEntity entity) {
-        return ((City) entity).getName();
+    protected String getInsertValuesForFirstApproach(City entity) {
+        return entity.getName();
     }
 
     @Override
     protected void fillPreparedStatementParamsForSave(PreparedStatement preparedStatement,
-                                                      BaseEntity entity) throws SQLException {
+                                                      City entity) throws SQLException {
         preparedStatement.setString(
-                1, ((City) entity).getName()
+                1, entity.getName()
         );
 
     }
 
     @Override
-    protected void fillPreparedStatementParamsForUpdate(PreparedStatement preparedStatement, BaseEntity entity)
+    protected void fillPreparedStatementParamsForUpdate(PreparedStatement preparedStatement, City entity)
             throws SQLException {
         preparedStatement.setString(
-                1, ((City) entity).getName()
+                1, entity.getName()
         );
         preparedStatement.setLong(
                 2, entity.getId()
         );
     }
+
+    @Override
+    protected void fillIdParamInPreparedStatement(PreparedStatement preparedStatement, int parameterIndex, Long id) throws SQLException {
+        preparedStatement.setLong(
+                parameterIndex, id
+        );
+    }
+
+    @Override
+    protected void setGenerateKey(City entity, ResultSet generatedKeysResultSet) throws SQLException {
+        entity.setId(
+                generatedKeysResultSet.getLong(1)
+        );
+    }
+
+
 }

@@ -1,6 +1,5 @@
 package ir.maktabsharif101.oopjdbc.repository.impl;
 
-import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 import ir.maktabsharif101.oopjdbc.base.repository.impl.BaseEntityRepositoryImpl;
 import ir.maktabsharif101.oopjdbc.domain.User;
 import ir.maktabsharif101.oopjdbc.repository.UserRepository;
@@ -11,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @SuppressWarnings("unused")
-public class UserRepositoryImpl extends BaseEntityRepositoryImpl
+public class UserRepositoryImpl extends BaseEntityRepositoryImpl<User, Long>
         implements UserRepository {
 
     public UserRepositoryImpl(Connection connection) {
@@ -24,7 +23,7 @@ public class UserRepositoryImpl extends BaseEntityRepositoryImpl
     }
 
     @Override
-    protected BaseEntity mapResultSetToEntity(ResultSet resultSet) throws SQLException {
+    protected User mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setId(
                 resultSet.getLong(1)
@@ -46,11 +45,6 @@ public class UserRepositoryImpl extends BaseEntityRepositoryImpl
     }
 
     @Override
-    protected BaseEntity[] getBaseEntityArrayForFindAll() throws SQLException {
-        return new User[(int) count()];
-    }
-
-    @Override
     protected String getInsertColumnsForFirstApproach() {
         return User.FIRST_NAME.concat(", ").concat(User.LAST_NAME).concat(", ").concat(User.USERNAME)
                 .concat(", ").concat(User.PASSWORD);
@@ -58,8 +52,7 @@ public class UserRepositoryImpl extends BaseEntityRepositoryImpl
     }
 
     @Override
-    protected String getInsertValuesForFirstApproach(BaseEntity entity) {
-        User user = (User) entity;
+    protected String getInsertValuesForFirstApproach(User user) {
         return "'".concat(user.getFirstName()).concat("', ").
                 concat("'").concat(user.getLastName()).concat("', ").
                 concat("'").concat(user.getUsername()).concat("', ").
@@ -78,9 +71,8 @@ public class UserRepositoryImpl extends BaseEntityRepositoryImpl
 
     @Override
     protected void fillPreparedStatementParamsForSave(PreparedStatement preparedStatement,
-                                                      BaseEntity entity) throws SQLException {
+                                                      User user) throws SQLException {
 //        inset into user_tbl(first_name, last_name, username, password) values(?, ?, ?, ?)
-        User user = (User) entity;
         preparedStatement.setString(
                 1,
                 user.getFirstName()
@@ -101,8 +93,7 @@ public class UserRepositoryImpl extends BaseEntityRepositoryImpl
 
     @Override
     protected void fillPreparedStatementParamsForUpdate(PreparedStatement preparedStatement,
-                                                        BaseEntity entity) throws SQLException {
-        User user = (User) entity;
+                                                        User user) throws SQLException {
         preparedStatement.setString(
                 1,
                 user.getFirstName()
@@ -122,6 +113,20 @@ public class UserRepositoryImpl extends BaseEntityRepositoryImpl
         preparedStatement.setLong(
                 5,
                 user.getId()
+        );
+    }
+
+    @Override
+    protected void fillIdParamInPreparedStatement(PreparedStatement preparedStatement, int parameterIndex, Long id) throws SQLException {
+        preparedStatement.setLong(
+                parameterIndex, id
+        );
+    }
+
+    @Override
+    protected void setGenerateKey(User entity, ResultSet generatedKeysResultSet) throws SQLException {
+        entity.setId(
+                generatedKeysResultSet.getLong(1)
         );
     }
 

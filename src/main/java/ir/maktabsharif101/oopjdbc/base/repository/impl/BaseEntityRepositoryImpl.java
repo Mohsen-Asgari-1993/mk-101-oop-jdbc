@@ -3,10 +3,14 @@ package ir.maktabsharif101.oopjdbc.base.repository.impl;
 import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 import ir.maktabsharif101.oopjdbc.base.repository.BaseEntityRepository;
 
+import java.io.Serializable;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class BaseEntityRepositoryImpl
-        implements BaseEntityRepository {
+@SuppressWarnings("unused")
+public abstract class BaseEntityRepositoryImpl<T extends BaseEntity<ID>, ID extends Serializable>
+        implements BaseEntityRepository<T, ID> {
 
     protected final Connection connection;
 
@@ -21,7 +25,7 @@ public abstract class BaseEntityRepositoryImpl
     }
 
     @Override
-    public BaseEntity[] findAll() throws SQLException {
+    public List<T> findAll() throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 String.format(
                         FIND_ALL_QUERY_TEMPLATE,
@@ -29,25 +33,25 @@ public abstract class BaseEntityRepositoryImpl
                 )
         );
         ResultSet resultSet = preparedStatement.executeQuery();
-        BaseEntity[] entities = getBaseEntityArrayForFindAll();
-//        BaseEntity[] entities = new BaseEntity[(int) count()];
-        int index = 0;
+        List<T> entities = new ArrayList<>();
         while (resultSet.next()) {
-            entities[index] = mapResultSetToEntity(resultSet);
-            index++;
+            entities.add(
+                    mapResultSetToEntity(resultSet)
+            );
         }
         return entities;
     }
 
     @Override
-    public BaseEntity findById(Long id) throws SQLException {
+    public T findById(ID id) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 String.format(
                         FIND_BY_ID_QUERY_TEMPLATE,
                         getEntityTableName()
                 )
         );
-        preparedStatement.setLong(1, id);
+        preparedStatement.setObject(1, id);
+//        fillIdParamInPreparedStatement(preparedStatement, 1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
             return mapResultSetToEntity(resultSet);
@@ -66,13 +70,13 @@ public abstract class BaseEntityRepositoryImpl
     }
 
     @Override
-    public BaseEntity save(BaseEntity entity) throws SQLException {
+    public T save(T entity) throws SQLException {
 //        return saveFirstApproach(entity);
         return saveSecondApproach(entity);
     }
 
     @Override
-    public BaseEntity update(BaseEntity entity) throws SQLException {
+    public T update(T entity) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 generateUpdateQuery()
         );
@@ -82,43 +86,43 @@ public abstract class BaseEntityRepositoryImpl
     }
 
     @Override
-    public boolean existsById(Long id) throws SQLException {
+    public boolean existsById(ID id) throws SQLException {
 //        return existsByIdWithCount(id);
         return existsByIdWithIdSelection(id);
     }
 
     @Override
-    public void deleteById(Long id) throws SQLException {
+    public void deleteById(ID id) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 String.format(
                         DELETE_BY_ID_QUERY_TEMPLATE,
                         getEntityTableName()
                 )
         );
-        preparedStatement.setLong(1, id);
+        preparedStatement.setObject(1, id);
         preparedStatement.executeUpdate();
     }
 
-    protected boolean existsByIdWithCount(Long id) throws SQLException {
+    protected boolean existsByIdWithCount(ID id) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "select count(*) from " + getEntityTableName() + " where id = ?"
         );
-        preparedStatement.setLong(1, id);
+        preparedStatement.setObject(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
         return resultSet.getLong(1) > 0;
     }
 
-    protected boolean existsByIdWithIdSelection(Long id) throws SQLException {
+    protected boolean existsByIdWithIdSelection(ID id) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "select id from " + getEntityTableName() + " where id = ?"
         );
-        preparedStatement.setLong(1, id);
+        preparedStatement.setObject(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet.next();
     }
 
-    protected BaseEntity saveFirstApproach(BaseEntity entity) throws SQLException {
+    protected T saveFirstApproach(T entity) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 String.format(
                         INSERT_QUERY_TEMPLATE,
@@ -132,7 +136,7 @@ public abstract class BaseEntityRepositoryImpl
         return setGenerateKeyAndReturnEntity(entity, preparedStatement);
     }
 
-    protected BaseEntity saveSecondApproach(BaseEntity entity) throws SQLException {
+    protected T saveSecondApproach(T entity) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 generateSaveSecondApproachQuery(),
                 Statement.RETURN_GENERATED_KEYS
@@ -142,13 +146,11 @@ public abstract class BaseEntityRepositoryImpl
         return setGenerateKeyAndReturnEntity(entity, preparedStatement);
     }
 
-    protected BaseEntity setGenerateKeyAndReturnEntity(BaseEntity entity, PreparedStatement preparedStatement) throws SQLException {
+    protected T setGenerateKeyAndReturnEntity(T entity, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.executeUpdate();
         ResultSet generatedKeysResultSet = preparedStatement.getGeneratedKeys();
         generatedKeysResultSet.next();
-        entity.setId(
-                generatedKeysResultSet.getLong(1)
-        );
+        setGenerateKey(entity, generatedKeysResultSet);
         return entity;
     }
 
@@ -200,18 +202,20 @@ public abstract class BaseEntityRepositoryImpl
 
     protected abstract String getEntityTableName();
 
-    protected abstract BaseEntity mapResultSetToEntity(ResultSet resultSet) throws SQLException;
-
-    protected abstract BaseEntity[] getBaseEntityArrayForFindAll() throws SQLException;
+    protected abstract T mapResultSetToEntity(ResultSet resultSet) throws SQLException;
 
     protected abstract String getInsertColumnsForFirstApproach();
 
-    protected abstract String getInsertValuesForFirstApproach(BaseEntity entity);
+    protected abstract String getInsertValuesForFirstApproach(T entity);
 
     protected abstract void fillPreparedStatementParamsForSave(PreparedStatement preparedStatement,
-                                                               BaseEntity entity) throws SQLException;
+                                                               T entity) throws SQLException;
 
     protected abstract void fillPreparedStatementParamsForUpdate(PreparedStatement preparedStatement,
-                                                                 BaseEntity entity) throws SQLException;
+                                                                 T entity) throws SQLException;
+
+    protected abstract void fillIdParamInPreparedStatement(PreparedStatement preparedStatement, int parameterIndex, ID id) throws SQLException;
+
+    protected abstract void setGenerateKey(T entity, ResultSet generatedKeysResultSet) throws SQLException;
 
 }

@@ -4,7 +4,7 @@ import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 
 @SuppressWarnings("unused")
 //@Entity
-public class Permission extends BaseEntity {
+public class Permission extends BaseEntity<Long> {
 
     public static final String TABLE_NAME = "permission_tbl";
 

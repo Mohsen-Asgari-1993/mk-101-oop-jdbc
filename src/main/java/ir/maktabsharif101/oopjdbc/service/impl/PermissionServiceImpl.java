@@ -6,7 +6,7 @@ import ir.maktabsharif101.oopjdbc.repository.PermissionRepository;
 import ir.maktabsharif101.oopjdbc.service.PermissionService;
 
 @SuppressWarnings("unused")
-public class PermissionServiceImpl extends BaseEntityServiceImpl
+public class PermissionServiceImpl extends BaseEntityServiceImpl<Permission, Long, PermissionRepository>
         implements PermissionService {
 
     public PermissionServiceImpl(PermissionRepository baseRepository) {
@@ -15,7 +15,7 @@ public class PermissionServiceImpl extends BaseEntityServiceImpl
 
     @Override
     public Permission findByName(String name) {
-        return ((PermissionRepository) baseRepository).findByName(name);
+        return baseRepository.findByName(name);
     }
 
 }

@@ -4,13 +4,14 @@ import ir.maktabsharif101.oopjdbc.base.domain.BaseEntity;
 import ir.maktabsharif101.oopjdbc.domain.enumeration.UserType;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @SuppressWarnings("unused")
 //@Entity
 // @Inheritance(strategy = SINGLE_TABLE)
 // @Inheritance(strategy = JOIN)
 // @Inheritance(strategy = TABLE_PRE_CLASS)
-public class User extends BaseEntity {
+public class User extends BaseEntity<Long> {
 
     public static final String TABLE_NAME = "user_tbl";
 
@@ -40,7 +41,7 @@ public class User extends BaseEntity {
     private UserType userType;
 
     //    ManyToMany
-    private Role[] roles;
+    private List<Role> roles;
 
     public String getFirstName() {
         return firstName;
@@ -114,11 +115,11 @@ public class User extends BaseEntity {
         this.mobileNumber = mobileNumber;
     }
 
-    public Role[] getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Role[] roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
