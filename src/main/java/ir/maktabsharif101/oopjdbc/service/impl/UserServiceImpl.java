@@ -27,7 +27,7 @@ public class UserServiceImpl
     }
 
     @Override
-    public User findByUsername(String username) {
+    public User findByUsername(String username) throws SQLException {
         return baseRepository.findByUsername(username);
     }
 
