@@ -2,11 +2,9 @@ package ir.maktabsharif101.oopjdbc.service.dto;
 
 import ir.maktabsharif101.oopjdbc.domain.enumeration.CommentStatus;
 
-import java.util.Set;
-
 public class CommentStatusUpdateDTO {
 
-    private Set<Long> commentIds;
+    private Long commentId;
 
     private CommentStatus status;
 
@@ -15,33 +13,21 @@ public class CommentStatusUpdateDTO {
     public CommentStatusUpdateDTO() {
     }
 
-    public CommentStatusUpdateDTO(Set<Long> commentIds, CommentStatus status, String reason) {
-        this.commentIds = commentIds;
+    public CommentStatusUpdateDTO(Long commentId, CommentStatus status, String reason) {
+        this.commentId = commentId;
         this.status = status;
         this.reason = reason;
     }
 
-    public Set<Long> getCommentIds() {
-        return commentIds;
-    }
-
-    public void setCommentIds(Set<Long> commentIds) {
-        this.commentIds = commentIds;
+    public Long getCommentId() {
+        return commentId;
     }
 
     public CommentStatus getStatus() {
         return status;
     }
 
-    public void setStatus(CommentStatus status) {
-        this.status = status;
-    }
-
     public String getReason() {
         return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
     }
 }
