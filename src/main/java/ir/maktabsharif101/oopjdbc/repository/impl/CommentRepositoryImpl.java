@@ -4,6 +4,7 @@ import ir.maktabsharif101.oopjdbc.base.repository.impl.BaseEntityRepositoryImpl;
 import ir.maktabsharif101.oopjdbc.domain.Comment;
 import ir.maktabsharif101.oopjdbc.domain.enumeration.CommentStatus;
 import ir.maktabsharif101.oopjdbc.repository.CommentRepository;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -122,7 +123,7 @@ public class CommentRepositoryImpl extends BaseEntityRepositoryImpl<Comment, Lon
         preparedStatement.setLong(3, comment.getNewsId());
         preparedStatement.setLong(4, comment.getCreateDateMillis());
         preparedStatement.setString(5, comment.getStatus().name());
-        preparedStatement.setString(6, "");
+        preparedStatement.setString(6, StringUtils.isNotBlank(comment.getReason()) ? comment.getReason() : "");
     }
 
     @Override
