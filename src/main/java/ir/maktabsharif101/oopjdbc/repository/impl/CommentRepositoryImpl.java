@@ -26,8 +26,8 @@ public class CommentRepositoryImpl extends BaseEntityRepositoryImpl<Comment, Lon
                 "    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 )," +
                 Comment.TEXT + "    character varying(2048) COLLATE pg_catalog.\"default\" NOT NULL," +
                 Comment.WRITER_NAME + "    character varying(255) COLLATE pg_catalog.\"default\" NOT NULL," +
-                Comment.NEWS_ID + "    bigint COLLATE pg_catalog.\"default\" ," +
-                Comment.CREATE_DATE_MILLIS + "    bigint COLLATE pg_catalog.\"default\" NOT NULL," +
+                Comment.NEWS_ID + "    bigint ," +
+                Comment.CREATE_DATE_MILLIS + "    bigint NOT NULL," +
                 Comment.STATUS + "    character varying(255) COLLATE pg_catalog.\"default\" NOT NULL," +
                 Comment.REASON + "    character varying(2048) COLLATE pg_catalog.\"default\" ," +
                 "    CONSTRAINT comment_pkey PRIMARY KEY (id)" +

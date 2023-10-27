@@ -1,46 +1,39 @@
 package ir.maktabsharif101.oopjdbc;
 
-import ir.maktabsharif101.oopjdbc.domain.Customer;
+import ir.maktabsharif101.oopjdbc.domain.Comment;
+import ir.maktabsharif101.oopjdbc.domain.enumeration.CommentStatus;
+import ir.maktabsharif101.oopjdbc.service.CommentService;
 import ir.maktabsharif101.oopjdbc.util.ApplicationContext;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OopJdbcApplication {
 
     public static void main(String[] args) throws SQLException {
 
+        CommentService commentService = ApplicationContext.getInstance().getCommentService();
+//
+//        Faker faker = new Faker();
+//
+//        for (int i = 0; i < 50; i++) {
+//            CommentCreationDTO dto = new CommentCreationDTO();
+//            dto.setText(
+//                    faker.address().fullAddress()
+//            );
+//            dto.setWriterName(
+//                    faker.name().fullName()
+//            );
+//            dto.setNewsId(
+//                    ThreadLocalRandom.current().nextLong(100)
+//            );
+//            commentService.create(dto);
+//        }
 
-        ApplicationContext.getInstance().getCustomerService();
+        List<Comment> allByStatus = commentService
+                .findAllByStatus(CommentStatus.WAITING);
+        allByStatus.forEach(System.out::println);
 
 
-        createNewThreadAndCallCustomerServiceApi();
-        createNewThreadAndCallCustomerServiceApi();
-        createNewThreadAndCallCustomerServiceApi();
-        createNewThreadAndCallCustomerServiceApi();
-        createNewThreadAndCallCustomerServiceApi();
-
-        List<Customer> customerList = ApplicationContext.getInstance().getCustomerService()
-                .findAllByAgeBetween(18, 30);
-
-        List<Customer> lessThan25 = customerList.stream().filter(customer -> customer.getAge() >= 18 && customer.getAge() < 25)
-                .collect(Collectors.toList());
-        List<Customer> greaterThan25 = customerList.stream().filter(customer -> customer.getAge() >= 25)
-                .collect(Collectors.toList());
-//        impl selectedCustomers
-
-    }
-
-    private static void createNewThreadAndCallCustomerServiceApi() {
-        new Thread(
-                () -> {
-                    try {
-                        ApplicationContext.getInstance().getCustomerService().testMultiThread();
-                    } catch (InterruptedException ignore) {
-
-                    }
-                }
-        ).start();
     }
 }
