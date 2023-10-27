@@ -30,6 +30,10 @@ public class ApplicationContext {
 
     private CustomerService customerService;
 
+    private CommentRepository commentRepository;
+
+    private CommentService commentService;
+
     private ApplicationContext() {
     }
 
@@ -127,5 +131,23 @@ public class ApplicationContext {
             );
         }
         return customerService;
+    }
+
+    public CommentRepository getCommentRepository() {
+        if (commentRepository == null) {
+            commentRepository = new CommentRepositoryImpl(
+                    DataSource.getConnection()
+            );
+        }
+        return commentRepository;
+    }
+
+    public CommentService getCommentService() {
+        if (commentService == null) {
+            commentService = new CommentServiceImpl(
+                    getCommentRepository()
+            );
+        }
+        return commentService;
     }
 }
