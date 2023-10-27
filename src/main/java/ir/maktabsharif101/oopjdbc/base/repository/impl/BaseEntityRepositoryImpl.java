@@ -6,6 +6,7 @@ import ir.maktabsharif101.oopjdbc.base.repository.BaseEntityRepository;
 import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -19,6 +20,7 @@ public abstract class BaseEntityRepositoryImpl<T extends BaseEntity<ID>, ID exte
     public static final String INSERT_QUERY_TEMPLATE = "insert into %s(%s) values(%s)";
     public static final String UPDATE_QUERY_TEMPLATE = "update %s set %s where id = ?";
     public static final String DELETE_BY_ID_QUERY_TEMPLATE = "delete from %s where id = ?";
+    public static final String FIND_ALL_BY_ID_IN_QUERY_TEMPLATE = "select * from %s where id in (%s)";
 
     protected BaseEntityRepositoryImpl(Connection connection) {
         this.connection = connection;
@@ -101,6 +103,33 @@ public abstract class BaseEntityRepositoryImpl<T extends BaseEntity<ID>, ID exte
         );
         preparedStatement.setObject(1, id);
         preparedStatement.executeUpdate();
+    }
+
+    @Override
+    public List<T> findAllByIdIn(Collection<ID> ids) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                generateFindAllByIdInQuery(ids.size())
+        );
+        int index = 1;
+        for (ID id : ids) {
+            preparedStatement.setObject(index++, id);
+        }
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<T> entityList = new ArrayList<>();
+        while (resultSet.next()) {
+            entityList.add(
+                    mapResultSetToEntity(resultSet)
+            );
+        }
+        return entityList;
+    }
+
+    protected String generateFindAllByIdInQuery(int size) {
+        return String.format(
+                FIND_ALL_BY_ID_IN_QUERY_TEMPLATE,
+                getEntityTableName(),
+                generateQuestionMarkForInsertQuery(size)
+        );
     }
 
     protected boolean existsByIdWithCount(ID id) throws SQLException {

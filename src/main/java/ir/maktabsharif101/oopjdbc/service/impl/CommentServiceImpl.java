@@ -11,7 +11,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.sql.SQLException;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CommentServiceImpl implements CommentService {
 
@@ -61,10 +60,13 @@ public class CommentServiceImpl implements CommentService {
 //        updateDTO.commentIds[1, 2, 3, 4, 500]
 //        selectedComments[1, 2, 3, 4]
 
-        List<Comment> selectedComments =
-                baseRepository.findAll()
-                        .stream().filter(comment -> updateDTO.getCommentIds().contains(comment.getId()))
-                        .collect(Collectors.toList());
+//        List<Comment> selectedComments =
+//                baseRepository.findAll()
+//                        .stream().filter(comment -> updateDTO.getCommentIds().contains(comment.getId()))
+//                        .collect(Collectors.toList());
+        List<Comment> selectedComments = baseRepository.findAllByIdIn(
+                updateDTO.getCommentIds()
+        );
         if (selectedComments.isEmpty() || selectedComments.size() != updateDTO.getCommentIds().size()) {
             throw new RuntimeException("wrong ids");
         }

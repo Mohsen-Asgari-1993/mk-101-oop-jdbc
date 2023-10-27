@@ -16,12 +16,11 @@ public class OopJdbcApplication {
         CommentService commentService = ApplicationContext.getInstance().getCommentService();
 
         Set<Long> commentIds = new HashSet<>();
-        commentIds.add(12L);
-        commentIds.add(14L);
-        commentIds.add(16L);
+        commentIds.add(21L);
+        commentIds.add(400L);
         commentService.updateStatusInBatch(
                 new CommentStatusUpdateDTO(
-                        commentIds, CommentStatus.ACCEPTED, "reason"
+                        commentIds, CommentStatus.ACCEPTED, "reason for 11"
                 )
         );
     }
